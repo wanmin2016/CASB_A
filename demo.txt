@@ -1,0 +1,16 @@
+﻿#Get the encrypted password
+#read-host -assecurestring | convertfrom-securestring | out-file $PassFile
+for($file=[System.IO.File]::OpenText("$NameFile"); !($file.EndOfStream); $line=$file.ReadLine() )
+{
+    $name = $line.Split(":")[0].Trim(" ")
+    $vPort = $line.Split(":")[1].Trim(" ") + "*"
+    $netFolder = Get-Folder -Type "network" -Name "$name"
+
+    if ($null -eq $netFolder)
+    {
+        $netFolder = New-Folder -Name "$name" -Location $netRootFolder
+    }
+    Get-VM -Name "$vmHead" | Move-VM -Destination $vmFolder
+    Get-VirtualPortGroup -Name "$vPort" | 
+}
+$file.Close()
